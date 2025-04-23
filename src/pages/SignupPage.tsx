@@ -11,6 +11,8 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { mutate: handleSignup, isSuccess } = useSignup();
+  const isSignupBtnActive =
+    !!email && !!password && password === confirmPassword;
 
   useEffect(() => {
     if (isSuccess) {
@@ -22,7 +24,32 @@ export default function SignupPage() {
   console.log("password: ", password);
   console.log("confirmPassword: ", confirmPassword);
 
-  return <Wrapper></Wrapper>;
+  // 1. 회원가입 버튼 비활성화
+  // 2. 이메일, 비밀번호, 비밀번호 확인 input에 입력이 되면, 입력된 값이 state에 저장되도록
+  // 3. 비밀번호와 비밀번호 확인이 일치하는지 확인
+  // 4. 회원가입 버튼 활성화
+  // 5. 회원가입 버튼을 누르면, useSignup 훅을 사용해서 회원가입 요청
+  // 6. 회원가입 요청이 성공하면, alert로 회원가입 성공 메시지를 띄우고, 로그인 페이지로 이동
+  return (
+    <Wrapper>
+      <Input data-cy="emailInput" onChange={(e) => setEmail(e.target.value)} />
+      <Input
+        data-cy="passwordInput"
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <Input
+        data-cy="confirmPasswordInput"
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
+      <Button
+        data-cy="signupButton"
+        disabled={!isSignupBtnActive}
+        label="회원가입"
+        primary
+        onClick={() => handleSignup({ username: email, password })}
+      />
+    </Wrapper>
+  );
 }
 
 const ColumnSpaceBetween = css`

@@ -18,7 +18,9 @@ describe("회원가입 테스트", () => {
       .invoke("val")
       .then((passwordValue) => {
         expect(passwordValue.trim()).to.not.be.empty;
-        cy.get("@confirmPasswordInput").should("not.be.disabled");
+        cy.get("@confirmPasswordInput")
+          .invoke("val")
+          .should("eq", passwordValue);
         cy.get("@signupButton").should("not.be.disabled");
       });
 
