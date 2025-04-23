@@ -32,6 +32,11 @@ export default function SignupPage() {
   // 6. 회원가입 요청이 성공하면, alert로 회원가입 성공 메시지를 띄우고, 로그인 페이지로 이동
   return (
     <Wrapper>
+      {password !== confirmPassword && (
+        <ErrorMessage data-testid="error-message">
+          비밀번호가 일치하지 않습니다
+        </ErrorMessage>
+      )}
       <Input data-cy="emailInput" onChange={(e) => setEmail(e.target.value)} />
       <Input
         data-cy="passwordInput"
